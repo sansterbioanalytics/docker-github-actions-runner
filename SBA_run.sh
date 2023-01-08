@@ -11,4 +11,4 @@ docker run -d --restart always --name github-runner \
   -e LABELS=$LABELS \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v /tmp/sansterbioanalytics/docker-github-actions-runner:/tmp/sansterbioanalytics/docker-github-actions-runner \
-  myoung34/github-runner:ubuntu-jammy
+  ghcr.io/sansterbioanalytics/docker-github-actions-runner:master
