@@ -27,8 +27,13 @@ jobs:
       packages: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      # Setup QEMU?
+       -name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      # Setup Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
@@ -58,8 +63,8 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,ref=${{ steps.meta.outputs.tags }}
+          cache-to: type=inline
 
 
       # Sign the resulting Docker image digest except on PRs.
