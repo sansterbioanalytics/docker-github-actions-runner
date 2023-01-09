@@ -2,7 +2,7 @@
 export $(grep -v '^#' .env | xargs)
 
 # Login to ghrc
-docker login ghcr.io
+echo $CLASSIC_ACCESS_TOKEN | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
 
 # Pull the image
 docker pull ghcr.io/sansterbioanalytics/docker-github-actions-runner:master
