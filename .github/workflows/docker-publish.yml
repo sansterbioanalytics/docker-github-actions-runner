@@ -82,7 +82,7 @@ jobs:
 
       # Sign the resulting Docker image digest except on PRs.
 #      - name: Sign image with a key
-#        if: ${{ github.event_name != 'pull_request' }}
+
 #        run: |
 #          cosign sign --key env://COSIGN_PRIVATE_KEY ${TAGS}
 #        env:
@@ -92,6 +92,8 @@ jobs:
 
       # Why not?
       - name: Sign the images with GitHub OIDC Token **not production ready**
-        run: cosign sign ${{ steps.docker_meta.outputs.tags }}
+        if: ${{ github.event_name != 'pull_request' }}
+        run: cosign sign ${TAGS}
         env:
+          TAGS: ${{ steps.docker_meta.outputs.tags }}-${{ steps.meta.outputs.labels }}
           COSIGN_EXPERIMENTAL: true
