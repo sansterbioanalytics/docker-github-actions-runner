@@ -7,11 +7,11 @@ name: Docker
 
 on:
   push:
-    branches: ["master"]
+    branches: ["R-4.2.2"]
     # Publish semver tags as releases.
-    tags: ["v*.*.*"]
+    tags: ["v4.2.2"]
   pull_request:
-    branches: ["master"]
+    branches: ["R-4.2.2"]
   workflow_dispatch:
 
 env:
@@ -92,7 +92,6 @@ jobs:
 
       # Why not?
       - name: Sign the images with GitHub OIDC Token **not production ready**
-        run: cosign sign ${TAGS}
+        run: cosign sign ${{ steps.docker_meta.outputs.tags }}
         env:
-          TAGS: ${{ steps.docker_meta.outputs.tags }}
           COSIGN_EXPERIMENTAL: true
