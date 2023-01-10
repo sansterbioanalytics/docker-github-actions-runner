@@ -7,6 +7,7 @@ ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
 RUN mkdir -p /opt/hostedtoolcache
 
 ARG GH_RUNNER_VERSION="2.300.2"
+ARG R_VERSION="4.2.2"
 ARG TARGETPLATFORM
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -31,8 +32,16 @@ libgdal-dev libproj-dev libgeos-dev libudunits2-dev libnode-dev libcairo2-dev li
 libmagick++-dev libjq-dev libv8-dev libprotobuf-dev protobuf-compiler libsodium-dev imagemagick libgit2-dev \
 gobjc++ texinfo texlive-latex-base latex2html texlive-fonts-extra
 
+# Install java? (currently not implemented)
+#15 198.6 make[1]: Entering directory '/actions-runner/R-4.2.2'
+#15 198.6 configuring Java ...
+#15 198.7 
+#15 198.7 *** Cannot find any Java interpreter
+#15 198.7 *** Please make sure 'java' is on your PATH or set JAVA_HOME correspondingly
+#15 198.7 make[1]: [Makefile:87: stamp-java] Error 1 (ignored)
+
 # Install R v4.2.2 from source
-RUN wget https://cran.r-project.org/src/base/R-4/R-4.2.2.tar.gz && tar -xvzf R-4.2.2.tar.gz && cd R-4.2.2 && ./configure --with-blas="openblas" --with-lapack && sudo make -j`nproc` && sudo make install
+RUN wget https://cran.r-project.org/src/base/R-4/R-${R_VERSION}.tar.gz && tar -xvzf R-${R_VERSION}.tar.gz && cd R-${R_VERSION} && ./configure --with-blas="openblas" --with-lapack && sudo make -j`nproc` && sudo make install
 
 # Make sure renv is installed before the runner starts
 RUN Rscript -e 'install.packages(pkgs = c("renv", "xfun"), repos = "https://cloud.r-project.org")'
