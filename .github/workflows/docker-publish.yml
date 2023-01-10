@@ -91,7 +91,7 @@ jobs:
       # Sign the package image
       - name: Sign the images with GitHub OIDC Token **not production ready**
         if: ${{ github.event_name != 'pull_request' }}
-        run: cosign sign -a tag=${TAGS} ${{ env.REGISTRY }}@${{ steps.build-and-push.outputs.digest }}/${{ env.IMAGE_NAME }}
+        run: cosign sign -a tag=${TAGS} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
         env:
           TAGS: ${{ steps.meta.outputs.tags }}
           COSIGN_EXPERIMENTAL: true
