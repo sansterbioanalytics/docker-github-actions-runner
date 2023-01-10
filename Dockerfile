@@ -1,6 +1,7 @@
-# hadolint ignore=DL3007
-FROM myoung34/github-runner-base:latest
+
+FROM myoung34/github-runner-base:ubuntu-jammy
 LABEL maintainer="myoung34@my.apsu.edu"
+LABEL forker="austin@sansterbioanalytics.com"
 
 ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
 RUN mkdir -p /opt/hostedtoolcache
@@ -33,11 +34,8 @@ gobjc++ texinfo texlive-latex-base latex2html texlive-fonts-extra
 # Install R v4.2.2 from source
 RUN wget https://cran.r-project.org/src/base/R-4/R-4.2.2.tar.gz && tar -xvzf R-4.2.2.tar.gz && cd R-4.2.2 && ./configure --with-blas="openblas" --with-lapack && sudo make -j`nproc` && sudo make install
 
-# Set up CRAN
-# RUN mkdir -p /etc/R && echo "options(repos = c(CRAN = "https://cloud.r-project.org/"))" > /etc/R/Rprofile.site
-
 # Make sure renv is installed before the runner starts
-RUN Rscript -e 'install.packages(pkgs = c("renv"), repos = "https://cloud.r-project.org")'
+RUN Rscript -e 'install.packages(pkgs = c("renv", "xfun"), repos = "https://cloud.r-project.org")'
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./bin/Runner.Listener", "run", "--startuptype", "service"]
