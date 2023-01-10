@@ -2,6 +2,7 @@
 FROM myoung34/github-runner-base:ubuntu-jammy
 LABEL maintainer="myoung34@my.apsu.edu"
 LABEL forker="austin@sansterbioanalytics.com"
+LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image with R-4.2.2 installed and configured for Github Actions"
 
 ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
 RUN mkdir -p /opt/hostedtoolcache
