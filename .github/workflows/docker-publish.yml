@@ -103,6 +103,6 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         run: cosign sign -a tag=${TAGS} ${LABELS}
         env:
-          TAGS: ${{ steps.docker_meta.outputs.tags }}
+          TAGS: ${{ steps.meta.outputs.tags }}
           LABELS: ${{ steps.meta.outputs.labels }}
           COSIGN_EXPERIMENTAL: true
