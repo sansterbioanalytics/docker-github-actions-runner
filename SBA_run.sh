@@ -5,7 +5,7 @@ export $(grep -v '^#' .env | xargs)
 echo $CLASSIC_ACCESS_TOKEN | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
 
 # Pull the image
-docker pull ghcr.io/sansterbioanalytics/docker-github-actions-runner:master
+docker pull ghcr.io/sansterbioanalytics/docker-github-actions-runner:R-4.2.2
 
 #BUG pat is not allowed to gain access to the packages?
 #TODO make this fully emphemeral to save disk space
@@ -24,4 +24,4 @@ docker run -d --restart always --name github-runner \
   -e LABELS=$LABELS \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v /tmp/sansterbioanalytics/docker-github-actions-runner:/tmp/sansterbioanalytics/docker-github-actions-runner \
-  ghcr.io/sansterbioanalytics/docker-github-actions-runner:master
+  ghcr.io/sansterbioanalytics/docker-github-actions-runner:R-4.2.2
