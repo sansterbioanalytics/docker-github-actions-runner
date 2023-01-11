@@ -64,8 +64,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 USER $USERNAME
 ENV HOME /home/$USERNAME
-RUN cd ~ && sh -c "$(curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.4/zsh-in-docker.sh)"
-RUN ./zsh-in-docker.sh \
+RUN cd ~ && sh -c "$(curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.4/zsh-in-docker.sh)" -- \
     -p git \
     -p ssh-agent \
     -p https://github.com/zsh-users/zsh-autosuggestions \
