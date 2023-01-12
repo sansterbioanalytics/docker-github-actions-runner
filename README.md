@@ -1,14 +1,76 @@
 Docker Github Actions Runner
 ============================
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/myoung34/github-runner.svg)](https://hub.docker.com/r/myoung34/github-runner) [![awesome-runners](https://img.shields.io/badge/listed%20on-awesome--runners-blue.svg)](https://github.com/jonico/awesome-runners)
+[![Publish R-4.2.2 Docker Image](https://github.com/sansterbioanalytics/docker-github-actions-runner/actions/workflows/R-docker-publish.yml/badge.svg?branch=R-4.2.2)](https://github.com/sansterbioanalytics/docker-github-actions-runner/actions/workflows/R-docker-publish.yml) 
+
+## Available paths
+
+- `/<string:package_owner>/<string:package_name>/tags?color=...&ignore=...&n=...&label=...&trim=...`
+  - defaults: `color=#e05d44`, `ignore=latest`, `n=3`, `label=image tags`
+  - <https://ghcr-badge.deta.dev/sansterbioanalytics/docker-github-actions-runner/tags?trim=major&ignore=sha256*>
+  - 👉: ![1]
+- `/<string:package_owner>/<string:package_name>/latest_tag?color=...&ignore=...&label=...&trim=...`
+  - defaults: `color=#e05d44`, `ignore=latest`, `label=version`
+  - <https://ghcr-badge.deta.dev/eggplants/ghcr-badge/latest_tag?trim=major&label=latest>
+  - 👉: ![2]
+- `/<string:package_owner>/<string:package_name>/develop_tag?color=...&label=...`
+  - defaults: `color=#e05d44`, `label=develop`
+  - <https://ghcr-badge.deta.dev/ptr727/plexcleaner/develop_tag>
+  - 👉: ![3]
+- `/<string:package_owner>/<string:package_name>/size?color=...&tag=...&label=...&trim=...`
+  - defaults: `color=#e05d44`, `tag=latest`, `label=image size`
+  - <https://ghcr-badge.deta.dev/sansterbioanalytics/docker-github-actions-runner/size&label=R-4-2-2>
+  - 👉: ![4]
+
+- `/<string:package_owner>/<string:package_name>/size?color=...&tag=...&label=...&trim=...`
+  - defaults: `color=#e05d44`, `tag=latest`, `label=image size`
+  - <https://ghcr-badge.deta.dev/sansterbioanalytics/docker-github-actions-runner/tags?trim=major&ignore=sha256*>
+  - 👉: ![4]
+
+
+
+
+## Common parameters
+
+### `label` parameter
+
+- `label=hello`: ![label=hello](https://ghcr-badge.deta.dev/eggplants/ghcr-badge/tags?trim=major&label=hello)
+
+### `ignore` parameter
+
+Use the ignore parameter to filter returned tags, supports pattern matching and a comma separated list.
+
+- `ignore=latest` ignores the `latest` tag (default).
+- `ignore=sha256*` ignores all tags prefixed with `sha256`.
+- `ignore=v0.0.1,latest,sha256*` ignores the `latest` and `v0.0.1` tags, and all tags prefixed with `sha256*`.
+
+### `trim` parameter
+
+- `trim=patch` trims `^v?\d+\.\d+\.\d+[^.]*$` tags.
+- `trim=major` trims `^v?\d+\.\d+[^.]*$` tags.
+
+### `color` parameter
+
+Available color names and hex codes are listed on [here](https://github.com/jongracecox/anybadge#colors).
+
+## Note
+
+GitHub caches badge data in 604800 seconds(=7 days). To update, try: `curl -X PURGE "https://camo.githubusercontent.com/..."` (it's badge image link)
+
+[1]: https://ghcr-badge.deta.dev/eggplants/ghcr-badge/tags?trim=major
+[2]: https://ghcr-badge.deta.dev/eggplants/ghcr-badge/latest_tag?trim=major&label=latest
+[3]: https://ghcr-badge.deta.dev/ptr727/plexcleaner/develop_tag
+[4]: https://ghcr-badge.deta.dev/eggplants/ghcr-badge/size
 
 This will run the [new self-hosted github actions runners](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/hosting-your-own-runners).
 
 ## Quick-Start (Examples and Usage) ##
 
+
+docker pull ghcr.io/sansterbioanalytics/docker-github-actions-runner:R-4.2.2
+
 Please see [the wiki](https://github.com/myoung34/docker-github-actions-runner/wiki/Usage)
-Please read [the contributing guidelines](https://github.com/myoung34/docker-github-actions-runner/blob/master/CONTRIBUTING.md)
+
 
 ## Notes ##
 
