@@ -71,5 +71,6 @@ RUN cd ~ && sh -c "$(curl -L https://github.com/deluan/zsh-in-docker/releases/do
     -p https://github.com/zsh-users/zsh-completions \
     -p https://github.com/zsh-users/zsh-syntax-highlighting
 
+USER root
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./bin/Runner.Listener", "run", "--startuptype", "service"]
