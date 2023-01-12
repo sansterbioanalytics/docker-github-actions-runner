@@ -26,12 +26,18 @@ RUN chmod +x /token.sh /entrypoint.sh /app_token.sh
 
 # Install R dependencies for related workloads
 RUN apt-get update -y && apt-get install -y \
-build-essential libcurl4-openssl-dev gfortran liblapack-dev \
-libopenblas-dev libxml2-dev libpng-dev zlib1g-dev cmake \
-libreadline-dev libx11-dev libx11-doc \
-libgdal-dev libproj-dev libgeos-dev libudunits2-dev libnode-dev libcairo2-dev libnetcdf-dev \
-libmagick++-dev libjq-dev libv8-dev libprotobuf-dev protobuf-compiler libsodium-dev imagemagick libgit2-dev \
-gobjc++ texinfo texlive-latex-base latex2html texlive-fonts-extra
+    build-essential libcurl4-openssl-dev gfortran liblapack-dev \
+    libopenblas-dev libxml2-dev libpng-dev zlib1g-dev cmake \
+    libreadline-dev libx11-dev libx11-doc \
+    libgdal-dev libproj-dev libgeos-dev libudunits2-dev libnode-dev libcairo2-dev libnetcdf-dev \
+    libmagick++-dev libjq-dev libv8-dev libprotobuf-dev protobuf-compiler libsodium-dev imagemagick libgit2-dev \
+    gobjc++ texinfo texlive-latex-base latex2html texlive-fonts-extra \
+    # Clean up
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
+
+
 
 # Install java? (currently not implemented)
 #15 198.6 make[1]: Entering directory '/actions-runner/R-4.2.2'
