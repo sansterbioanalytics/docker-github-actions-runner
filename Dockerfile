@@ -43,9 +43,33 @@ gobjc++ texinfo texlive-latex-base latex2html texlive-fonts-extra
 
 # Install R v4.2.2 from source
 RUN wget https://cran.r-project.org/src/base/R-4/R-${R_VERSION}.tar.gz && tar -xvzf R-${R_VERSION}.tar.gz && cd R-${R_VERSION} && ./configure --with-blas="openblas" --with-lapack && sudo make -j`nproc` && sudo make install
-
-# Make sure renv is installed before the runner starts
 RUN Rscript -e 'install.packages(pkgs = c("renv", "xfun"), repos = "https://cloud.r-project.org")'
+
+# Setup the vscode user for codespace
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && apt-get update \
+    && apt-get install -y sudo wget \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME \
+    #
+    # Clean up
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
+
+USER $USERNAME
+ENV HOME /home/$USERNAME
+RUN cd ~ && sh -c "$(curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.4/zsh-in-docker.sh)" -- \
+    -p git \
+    -p ssh-agent \
+    -p https://github.com/zsh-users/zsh-autosuggestions \
+    -p https://github.com/zsh-users/zsh-completions \
+    -p https://github.com/zsh-users/zsh-syntax-highlighting
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./bin/Runner.Listener", "run", "--startuptype", "service"]
