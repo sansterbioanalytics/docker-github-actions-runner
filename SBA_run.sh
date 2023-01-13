@@ -72,17 +72,17 @@ start_runner(){
     esac
     # Login to ghrc
     echo $CLASSIC_ACCESS_TOKEN | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
-    docker pull $image_name
+
     # Start the runner
     docker run -d --restart always --name "github-runner-${runner_group,,}" \
-      -e RUNNER_NAME_PREFIX=$RUNNER_NAME_PREFIX \
+      -e RUNNER_NAME_PREFIX="$RUNNER_NAME_PREFIX,${runner_group,,}"\
       -e ACCESS_TOKEN=$ACCESS_TOKEN \
       -e RUNNER_WORKDIR=$RUNNER_WORKDIR \
       -e RUNNER_GROUP=$RUNNER_GROUP \
       -e RUNNER_SCOPE=$RUNNER_SCOPE \
       -e DISABLE_AUTO_UPDATE=$DISABLE_AUTO_UPDATE \
       -e ORG_NAME=$ORG_NAME \
-      -e LABELS= "$LABELS,${runner_group,,}" \
+      -e LABELS="$LABELS,${runner_group,,}" \
       -v /var/run/docker.sock:/var/run/docker.sock \
       -v /tmp/sansterbioanalytics/docker-github-actions-runner:/tmp/sansterbioanalytics/docker-github-actions-runner \
       $image_name
