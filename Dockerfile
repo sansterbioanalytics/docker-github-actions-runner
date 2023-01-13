@@ -1,5 +1,5 @@
 # hadolint ignore=DL3007
-FROM myoung34/github-runner-base:latest
+FROM myoung34/github-runner-base:ubuntu-jammy
 LABEL maintainer="myoung34@my.apsu.edu"
 LABEL forker="austin@sansterbioanalytics.com"
 LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image with Python3.10 installed and configured for Github Actions"
@@ -9,6 +9,7 @@ RUN mkdir -p /opt/hostedtoolcache
 
 ARG GH_RUNNER_VERSION="2.300.2"
 ARG PYTHON_VERSION="3.10.6"
+ENV POETRY_VERSION="1.3.2"
 ARG TARGETPLATFORM
 
 #### ACTIONS-RUNNER ####
@@ -31,8 +32,9 @@ RUN chmod +x /token.sh /entrypoint.sh /app_token.sh
 # Install Python 3.10, Poetry, Pipx
 RUN apt-get update \
     && apt-get install -y \
-    python3.10
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+    python3
+RUN python3 --version
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
 RUN python3 -m pip install pipx
 
 
