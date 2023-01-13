@@ -34,7 +34,7 @@ RUN apt-get update \
     && apt-get install -y \
     python3
 RUN python3 --version
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN python3 -m pip install pipx
 
 
@@ -59,9 +59,10 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 USER $USERNAME
 ENV HOME /home/$USERNAME
-RUN cd ~ && sh -c "$(curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.4/zsh-in-docker.sh)" -- \
+RUN cd ~ && sh -c "$(curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
     -p git \
     -p ssh-agent \
+    -p poetry \
     -p https://github.com/zsh-users/zsh-autosuggestions \
     -p https://github.com/zsh-users/zsh-completions \
     -p https://github.com/zsh-users/zsh-syntax-highlighting
