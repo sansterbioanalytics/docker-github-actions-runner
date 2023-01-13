@@ -26,7 +26,7 @@ validate_input() {
         exit 1
     fi
 
-    if [[ $1 != "R-4.2.2" && $1 != "Python3.10" && $1 != "master" ]]; then
+    if [[ $1 != "r-4.2.2" && $1 != "python3.10" && $1 != "master" ]]; then
         echo "Error: Invalid value for RUNNER_GROUP. Must be one of R-4.2.2, Python3.10, or master."
         exit 1
     fi
@@ -57,17 +57,17 @@ done
 
 start_runner(){
     case "$1" in
-        R-4.2.2)
+        r-4.2.2)
             image_name="ghcr.io/sansterbioanalytics/docker-github-actions-runner:r-4.2.2"
             ;;
-        Python3.10)
+        python3.10)
             image_name="ghcr.io/sansterbioanalytics/docker-github-actions-runner:python-3.10"
             ;;
         master)
             image_name="ghcr.io/sansterbioanalytics/docker-github-actions-runner:master"
             ;;
         *)
-            echo "Error: Invalid value for RUNNER_GROUP. Must be one of R-4.2.2, Python3.10, or master."
+            echo "Error: Invalid value for RUNNER_GROUP. Must be one of r-4.2.2, python3.10, or master."
             exit 1
     esac
     # Login to ghrc
