@@ -1,4 +1,4 @@
-name: Publish Python 3.10 Docker Image
+name: Publish python 3.10 Docker Image
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -8,11 +8,11 @@ name: Publish Python 3.10 Docker Image
 
 on:
   push:
-    branches: ["Python-3.10"]
+    branches: ["python-3.10"]
     # Publish semver tags as releases.
     tags: ["v3.10.6"]
   pull_request:
-    branches: ["Python-3.10"]
+    branches: ["python-3.10"]
   workflow_dispatch:
 
 env:
@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
-          ref: Python-3.10
+          ref: python-3.10
 
       # Install Cosign https://github.com/sigstore/cosign-installer
       - name: Install Cosign
