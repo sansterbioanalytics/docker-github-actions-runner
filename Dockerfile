@@ -32,7 +32,7 @@ RUN chmod +x /token.sh /entrypoint.sh /app_token.sh
 # Install Python 3.10, Poetry, Pipx
 RUN apt-get update \
     && apt-get install -y \
-    python3
+    python3 zsh zsh-common zsh-doc
 RUN python3 --version
 RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN python3 -m pip install pipx
@@ -59,7 +59,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 USER $USERNAME
 ENV HOME /home/$USERNAME
-RUN cd ~ && sh -c "$(curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
+RUN curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh -- \
     -p git \
     -p ssh-agent \
     -p poetry \
