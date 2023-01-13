@@ -9,6 +9,7 @@ ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
 RUN mkdir -p /opt/hostedtoolcache
 
 ARG GH_RUNNER_VERSION="2.300.2"
+ARG R_VERSION="4.2.2"
 ARG TARGETPLATFORM
 
 #### ACTIONS-RUNNER ####
