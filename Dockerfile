@@ -3,6 +3,7 @@ FROM myoung34/github-runner-base:ubuntu-jammy
 LABEL maintainer="myoung34@my.apsu.edu"
 LABEL forker="austin@sansterbioanalytics.com"
 LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image configured for Github Actions"
+LABEL org.opencontainers.image.source = "https://github.com/sansterbioanalytics/docker-github-actions-runner"
 
 ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
 RUN mkdir -p /opt/hostedtoolcache
