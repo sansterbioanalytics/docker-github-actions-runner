@@ -1,4 +1,4 @@
-name: Publish R-4.2.2 Docker Image
+name: Publish r-4.2.2 Docker Image
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -31,7 +31,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           ref: r-4.2.2
 
       # Install Cosign https://github.com/sigstore/cosign-installer
