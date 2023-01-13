@@ -32,7 +32,7 @@ RUN chmod +x /token.sh /entrypoint.sh /app_token.sh
 RUN apt-get update \
     && apt-get install -y \
     python3.10
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 RUN python3 -m pip install pipx
 
 
