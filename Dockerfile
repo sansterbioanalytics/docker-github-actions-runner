@@ -1,15 +1,17 @@
-
+# hadolint ignore=DL3007
 FROM myoung34/github-runner-base:ubuntu-jammy
 LABEL maintainer="myoung34@my.apsu.edu"
 LABEL forker="austin@sansterbioanalytics.com"
-LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image with R-4.2.2 installed and configured for Github Actions"
+LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image configured for Github Actions"
+LABEL org.opencontainers.image.source = "https://github.com/sansterbioanalytics/docker-github-actions-runner"
 
 ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
 RUN mkdir -p /opt/hostedtoolcache
 
 ARG GH_RUNNER_VERSION="2.300.2"
-ARG R_VERSION="4.2.2"
 ARG TARGETPLATFORM
+
+#### ACTIONS-RUNNER ####
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -36,8 +38,6 @@ RUN apt-get update -y && apt-get install -y \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
-
-
 
 # Install java? (currently not implemented)
 #15 198.6 make[1]: Entering directory '/actions-runner/R-4.2.2'
@@ -77,6 +77,7 @@ RUN cd ~ && sh -c "$(curl -L https://github.com/deluan/zsh-in-docker/releases/do
     -p https://github.com/zsh-users/zsh-completions \
     -p https://github.com/zsh-users/zsh-syntax-highlighting
 
+#### ACTIONS-RUNNER ####
 USER root
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./bin/Runner.Listener", "run", "--startuptype", "service"]
