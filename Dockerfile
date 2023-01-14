@@ -34,7 +34,7 @@ RUN apt-get update -y && apt-get install -y \
     libreadline-dev libx11-dev libx11-doc \
     libgdal-dev libproj-dev libgeos-dev libudunits2-dev libnode-dev libcairo2-dev libnetcdf-dev \
     libmagick++-dev libjq-dev libv8-dev libprotobuf-dev protobuf-compiler libsodium-dev imagemagick libgit2-dev \
-    gobjc++ texinfo texlive-latex-base latex2html texlive-fonts-extra \
+    gobjc++ texinfo texlive-latex-base latex2html texlive-fonts-extra pandoc \
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
@@ -50,7 +50,9 @@ RUN apt-get update -y && apt-get install -y \
 
 # Install R v4.2.2 from source
 RUN wget https://cran.r-project.org/src/base/R-4/R-${R_VERSION}.tar.gz && tar -xvzf R-${R_VERSION}.tar.gz && cd R-${R_VERSION} && ./configure --with-blas="openblas" --with-lapack && sudo make -j`nproc` && sudo make install
-RUN Rscript -e 'install.packages(pkgs = c("renv", "xfun"), repos = "https://cloud.r-project.org")'
+RUN Rscript -e 'install.packages(pkgs = c("renv", "xfun","lintr"), repos = "https://cloud.r-project.org")'
+# Add related R development tools
+RUN pip3 install radian
 
 # Setup the vscode user for codespace
 ARG USERNAME=vscode
@@ -71,9 +73,10 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 USER $USERNAME
 ENV HOME /home/$USERNAME
-RUN cd ~ && sh -c "$(curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.4/zsh-in-docker.sh)" -- \
+RUN cd ~ && sh -c "$(curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
     -p git \
     -p ssh-agent \
+    -a 'alias r="radian"' \
     -p https://github.com/zsh-users/zsh-autosuggestions \
     -p https://github.com/zsh-users/zsh-completions \
     -p https://github.com/zsh-users/zsh-syntax-highlighting
