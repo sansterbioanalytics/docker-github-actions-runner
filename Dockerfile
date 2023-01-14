@@ -50,7 +50,8 @@ RUN apt-get update -y && apt-get install -y \
 
 # Install R v4.2.2 from source
 RUN wget https://cran.r-project.org/src/base/R-4/R-${R_VERSION}.tar.gz && tar -xvzf R-${R_VERSION}.tar.gz && cd R-${R_VERSION} && ./configure --with-blas="openblas" --with-lapack && sudo make -j`nproc` && sudo make install
-RUN Rscript -e 'install.packages(pkgs = c("renv", "xfun","lintr"), repos = "https://cloud.r-project.org")'
+# Install core R development packages
+RUN Rscript -e 'install.packages(pkgs = c("renv", "xfun","lintr","jsonlite","httpgd"), repos = "https://cloud.r-project.org")'
 # Add related R development tools
 RUN pip3 install radian
 
