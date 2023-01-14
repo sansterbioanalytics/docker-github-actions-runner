@@ -26,7 +26,7 @@ validate_input() {
         exit 1
     fi
 
-    if [[ $1 != "R-4.2.2" && $1 != "Python3.10" && $1 != "master" ]]; then
+    if [[ $1 != "r-4.2.2" && $1 != "python3.10" && $1 != "master" ]]; then
         echo "Error: Invalid value for RUNNER_GROUP. Must be one of R-4.2.2, Python3.10, or master."
         exit 1
     fi
@@ -57,32 +57,32 @@ done
 
 start_runner(){
     case "$1" in
-        R-4.2.2)
+        r-4.2.2)
             image_name="ghcr.io/sansterbioanalytics/docker-github-actions-runner:r-4.2.2"
             ;;
-        Python3.10)
+        python3.10)
             image_name="ghcr.io/sansterbioanalytics/docker-github-actions-runner:python-3.10"
             ;;
         master)
             image_name="ghcr.io/sansterbioanalytics/docker-github-actions-runner:master"
             ;;
         *)
-            echo "Error: Invalid value for RUNNER_GROUP. Must be one of R-4.2.2, Python3.10, or master."
+            echo "Error: Invalid value for RUNNER_GROUP. Must be one of r-4.2.2, python3.10, or master."
             exit 1
     esac
     # Login to ghrc
     echo $CLASSIC_ACCESS_TOKEN | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
-    docker pull $image_name
+
     # Start the runner
     docker run -d --restart always --name "github-runner-${runner_group,,}" \
-      -e RUNNER_NAME_PREFIX=$RUNNER_NAME_PREFIX \
+      -e RUNNER_NAME_PREFIX="$RUNNER_NAME_PREFIX,${runner_group,,}"\
       -e ACCESS_TOKEN=$ACCESS_TOKEN \
       -e RUNNER_WORKDIR=$RUNNER_WORKDIR \
       -e RUNNER_GROUP=$RUNNER_GROUP \
       -e RUNNER_SCOPE=$RUNNER_SCOPE \
       -e DISABLE_AUTO_UPDATE=$DISABLE_AUTO_UPDATE \
       -e ORG_NAME=$ORG_NAME \
-      -e LABELS= "$LABELS,${runner_group,,}" \
+      -e LABELS="$LABELS,${runner_group,,}" \
       -v /var/run/docker.sock:/var/run/docker.sock \
       -v /tmp/sansterbioanalytics/docker-github-actions-runner:/tmp/sansterbioanalytics/docker-github-actions-runner \
       $image_name
@@ -94,4 +94,3 @@ echo "RUNNER_GROUP: $runner_group"
 
 # Start the runner
 start_runner $runner_group
-
