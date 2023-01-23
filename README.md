@@ -13,7 +13,7 @@ To configure and launch a self-hosted runner for the intended purpose, use the S
 
 This will run the [new self-hosted github actions runners](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/hosting-your-own-runners).
 Please see [the wiki](https://github.com/myoung34/docker-github-actions-runner/wiki/Usage)
-Please read [the contributing guidelines](https://github.com/myoung34/docker-github-actions-runner/blob/master/CONTRIBUTING.md)
+
 
 ## Notes ##
 

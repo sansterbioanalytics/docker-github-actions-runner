@@ -72,7 +72,8 @@ start_runner(){
     esac
     # Login to ghrc
     echo $CLASSIC_ACCESS_TOKEN | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
-
+    # Remove local runner if it already exists
+    docker rm "github-runner-${runner_group,,}"
     # Start the runner
     docker run -d --restart always --name "github-runner-${runner_group,,}" \
       -e RUNNER_NAME_PREFIX="$RUNNER_NAME_PREFIX,${runner_group,,}"\
