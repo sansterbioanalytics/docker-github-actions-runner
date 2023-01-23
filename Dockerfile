@@ -64,8 +64,7 @@ RUN curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh
     -p https://github.com/zsh-users/zsh-syntax-highlighting
 
 # Install CDKTF
-RUN curl -s https://raw.githubusercontent.com/hashicorp/cdktf/master/cli/install.sh | zsh
-
+RUN curl -s https://raw.githubusercontent.com/hashicorp/cdktf/master/cli/install.sh | bash
 
 #### ACTIONS-RUNNER ####
 USER root
