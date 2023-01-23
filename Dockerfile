@@ -26,6 +26,15 @@ RUN chmod +x /actions-runner/install_actions.sh \
 COPY token.sh entrypoint.sh app_token.sh /
 RUN chmod +x /token.sh /entrypoint.sh /app_token.sh
 
+#### Terraform ####
+
+# Install Terraform
+RUN apt-get update && \
+    apt-get install -y wget unzip && \
+    wget https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_linux_amd64.zip && \
+    unzip terraform_1.3.7_linux_amd64.zip -d /usr/local/bin/ && \
+    rm terraform_1.3.7_linux_amd64.zip
+
 #### CODESPACES ####
 # Setup the vscode user for codespace
 ARG USERNAME=vscode
@@ -35,7 +44,7 @@ ARG USER_GID=$USER_UID
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
     && apt-get update \
-    && apt-get install -y sudo wget less htop \
+    && apt-get install -y sudo wget less htop git build-essential curl \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME \
     #
@@ -53,6 +62,10 @@ RUN curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh
     -p https://github.com/zsh-users/zsh-autosuggestions \
     -p https://github.com/zsh-users/zsh-completions \
     -p https://github.com/zsh-users/zsh-syntax-highlighting
+
+# Install CDKTF
+RUN curl -s https://raw.githubusercontent.com/hashicorp/cdktf/master/cli/install.sh | zsh
+
 
 #### ACTIONS-RUNNER ####
 USER root
