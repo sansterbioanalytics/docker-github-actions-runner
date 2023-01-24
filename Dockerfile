@@ -57,9 +57,8 @@ RUN apt-get update \
   && apt-get install -y \
   python3 python3-pip python3.10-venv python3-dev \
   libcairo2-dev libjpeg-dev libgif-dev pkg-config && \
-  python3 --version && \
   pip install --upgrade pip && \
-  pip install --upgrade setuptools pycairo
+  pip install --upgrade setuptools
 
 #### CODESPACES ####
 # Setup the vscode user for codespace
