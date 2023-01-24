@@ -58,8 +58,7 @@ RUN apt-get update \
   python3 python3-pip python3.10-venv libcairo2-dev libjpeg-dev libgif-dev pkg-config && \
   python3 --version && \
   pip install --upgrade pip && \
-  pip install --upgrade setuptools pycairo && \
-  curl -sSL https://install.python-poetry.org | python3 -
+  pip install --upgrade setuptools pycairo &&
 
 #### CODESPACES ####
 # Setup the vscode user for codespace
