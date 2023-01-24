@@ -56,7 +56,7 @@ RUN npm upgrade && npm install --global cdktf-cli@latest
 RUN apt-get update \
   && apt-get install -y \
   python3 python3-pip python3.10-venv python3-dev \
-  libcairo2-dev libjpeg-dev libgif-dev pkg-config && \
+  libcairo2-dev libjpeg-dev libgif-dev pkg-config python3-apt libgirepository1.0-dev libdbus-1-dev && \
   pip install --upgrade pip && \
   pip install --upgrade setuptools
 
