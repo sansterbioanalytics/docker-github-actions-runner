@@ -55,10 +55,10 @@ RUN npm upgrade && npm install --global cdktf-cli@latest
 # Install Python 3.7, Poetry, Pipx, pipenv
 RUN apt-get update \
   && apt-get install -y \
-  python3 python3-pip python3.10-venv && \
+  python3 python3-pip python3.10-venv libcairo2-dev libjpeg-dev libgif-dev pkg-config && \
   python3 --version && \
   pip install --upgrade pip && \
-  pip install --upgrade setuptools && \
+  pip install --upgrade setuptools pycairo && \
   curl -sSL https://install.python-poetry.org | python3 -
 
 #### CODESPACES ####
