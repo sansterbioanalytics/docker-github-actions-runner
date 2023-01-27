@@ -30,9 +30,9 @@ RUN chmod +x /token.sh /entrypoint.sh /app_token.sh
 #### PYTHON ####
 
 # Install Python 3.10 and core dev requirements
-RUN apt-get update \
-    && apt-get install -y \
-    python3 build-essentials zsh zsh-common zsh-doc \
+RUN apt-get update && \
+    apt-get install -y \
+    python3 build-essential zsh zsh-common zsh-doc \
     python3-pip python3.10-venv python3-dev python3-apt python-is-python3
 
 # Log Python Version
