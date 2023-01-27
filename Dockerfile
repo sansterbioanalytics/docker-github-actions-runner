@@ -29,11 +29,21 @@ RUN chmod +x /token.sh /entrypoint.sh /app_token.sh
 
 #### PYTHON ####
 
-# Install Python 3.10, Poetry, Pipx
+# Install Python 3.10 and core dev requirements
 RUN apt-get update \
     && apt-get install -y \
-    python3 zsh zsh-common zsh-doc
+    python3 build-essentials zsh zsh-common zsh-doc \
+    python3-pip python3.10-venv python3-dev python3-apt python-is-python3
+
+# Log Python Version
 RUN python3 --version
+
+# Install other system libraries for Python 
+RUN apt-get update && \
+    apt-get install -y \
+    libcairo2-dev libjpeg-dev libgif-dev pkg-config  libgirepository1.0-dev libdbus-1-dev
+
+# Install Poetry and Pipx
 RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN python3 -m pip install pipx
 
