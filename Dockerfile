@@ -8,7 +8,7 @@ LABEL org.opencontainers.image.source = "https://github.com/sansterbioanalytics/
 ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
 RUN mkdir -p /opt/hostedtoolcache
 
-ARG GH_RUNNER_VERSION="2.300.2"
+ARG GH_RUNNER_VERSION="2.301.1"
 ARG TARGETPLATFORM
 
 #### ACTIONS-RUNNER ####
