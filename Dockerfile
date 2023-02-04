@@ -7,9 +7,9 @@ LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image with P
 ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
 RUN mkdir -p /opt/hostedtoolcache
 
-ARG GH_RUNNER_VERSION="2.300.2"
 ARG PYTHON_VERSION="3.10.6"
 ENV POETRY_VERSION="1.3.2"
+ARG GH_RUNNER_VERSION="2.301.1"
 ARG TARGETPLATFORM
 
 #### ACTIONS-RUNNER ####
@@ -58,7 +58,7 @@ ARG USER_GID=$USER_UID
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
     && apt-get update \
-    && apt-get install -y sudo wget \
+    && apt-get install -y sudo wget less htop \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME \
     #
