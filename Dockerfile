@@ -92,7 +92,7 @@ RUN curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh
   -p https://github.com/zsh-users/zsh-syntax-highlighting
 
 #### ACTIONS-RUNNER ####
-
-USER root
+RUN useradd -r -u 1001 -g actionsrunner actionsrunner
+USER actionsrunner
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./bin/Runner.Listener", "run", "--startuptype", "service"]
