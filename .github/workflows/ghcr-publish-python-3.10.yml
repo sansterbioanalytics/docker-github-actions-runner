@@ -1,4 +1,4 @@
-name: Publish base Actions Runner Docker Image
+name: Publish python 3.10 Docker Image
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -8,11 +8,9 @@ name: Publish base Actions Runner Docker Image
 
 on:
   push:
-    branches: ["master"]
-    # Publish semver tags as releases.
-    tags: ["v0.5.0"]
+    branches: ["python-3.10"]
   pull_request:
-    branches: ["master"]
+    branches: ["python-3.10"]
   workflow_dispatch:
 
 env:
@@ -43,7 +41,7 @@ jobs:
       # Check Cosign 
       - name: Check install!
         run: cosign version
-
+        
       # Setup QEMU binaries https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -56,6 +54,7 @@ jobs:
           driver-opts: |
             image=moby/buildkit:master
             network=host
+            
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
       - name: Extract Docker metadata
@@ -88,7 +87,7 @@ jobs:
           cache-to: type=inline
 
       # Sign the package image
-      - name: Sign the images with GitHub OIDC Token **not production ready**
+      - name: Sign the images with GitHub OIDC Token
         if: ${{ github.event_name != 'pull_request' }}
         run: cosign sign -a tag=${TAGS} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
         env:
