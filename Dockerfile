@@ -2,11 +2,14 @@
 FROM myoung34/github-runner-base:ubuntu-jammy
 LABEL maintainer="myoung34@my.apsu.edu"
 LABEL forker="austin@sansterbioanalytics.com"
-LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image configured for Github Actions"
 LABEL org.opencontainers.image.source = "https://github.com/sansterbioanalytics/docker-github-actions-runner"
 
 ARG GH_RUNNER_VERSION="2.301.1"
 ARG TARGETPLATFORM
+
+#### BRANCH-SPECIFIC LABELS ####
+# LABEL org.opencontainers.image.description DESCRIPTION
+LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image configured for Github Actions"
 
 #### ACTIONS-RUNNER ####
 ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
