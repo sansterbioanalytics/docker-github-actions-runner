@@ -12,10 +12,12 @@ ARG GH_RUNNER_VERSION="2.301.1"
 ARG TARGETPLATFORM
 
 #### ACTIONS-RUNNER ####
-# Setup the actionsrunner user for running
+# Setup the actionsrunner user
 ARG USERNAME2=actionsrunner
 ARG USER_UID2=1050
 ARG USER_GID2=1050
+
+USER root
 
 RUN groupadd --gid $USER_GID2 $USERNAME2 \
   && useradd -s /bin/bash --uid $USER_UID2 --gid $USER_GID2 -m $USERNAME2 \
