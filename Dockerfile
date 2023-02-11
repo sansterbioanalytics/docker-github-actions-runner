@@ -12,18 +12,7 @@ ARG GH_RUNNER_VERSION="2.301.1"
 ARG TARGETPLATFORM
 
 #### ACTIONS-RUNNER ####
-# Setup the actionsrunner user
-ARG USERNAME2=actionsrunner
-ARG USER_UID2=1050
-ARG USER_GID2=1050
 
-USER root
-
-RUN groupadd --gid $USER_GID2 $USERNAME2 \
-  && useradd -s /bin/bash --uid $USER_UID2 --gid $USER_GID2 -m $USERNAME2 \
-  && echo $USERNAME2 ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME2 \
-  && chmod 0440 /etc/sudoers.d/$USERNAME2
-  
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 WORKDIR /actions-runner
@@ -81,6 +70,6 @@ RUN curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh
   -p https://github.com/zsh-users/zsh-syntax-highlighting
 
 #### ACTIONS-RUNNER ####
-USER actionsrunner
+USER root
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./bin/Runner.Listener", "run", "--startuptype", "service"]
