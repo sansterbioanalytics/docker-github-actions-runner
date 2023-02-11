@@ -4,24 +4,13 @@ LABEL maintainer="myoung34@my.apsu.edu"
 LABEL forker="austin@sansterbioanalytics.com"
 LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image configured for Github Actions"
 LABEL org.opencontainers.image.source = "https://github.com/sansterbioanalytics/docker-github-actions-runner"
-LABEL version=${CDKTF_VERSION}
-LABEL name="terraform"
-
-ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
-RUN mkdir -p /opt/hostedtoolcache
 
 ARG GH_RUNNER_VERSION="2.301.1"
-ARG PYTHON_VERSION="3.10.6"
-ARG PYENV_HOME=/root/.pyenv
-ENV POETRY_VERSION="1.3.2"
-ARG NODE_VERSION=16.19.0
-ARG NODE_PACKAGE=node-v$NODE_VERSION-linux-x64
-ARG NODE_HOME=/opt/$NODE_PACKAGE
-
 ARG TARGETPLATFORM
 
 #### ACTIONS-RUNNER ####
-
+ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
+RUN mkdir -p /opt/hostedtoolcache
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 WORKDIR /actions-runner
@@ -36,7 +25,6 @@ COPY token.sh entrypoint.sh app_token.sh /
 RUN chmod +x /token.sh /entrypoint.sh /app_token.sh
 
 #### DOCKER ####
-
 # Install Docker CE CLI
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - \
   && sudo add-apt-repository \
@@ -51,7 +39,7 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   && rm -rf /var/lib/apt/lists/*
 
 #### CODESPACES ####
-# Setup the vscode user for codespace
+# Setup the vscode user for codespaces
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -67,7 +55,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
   && apt-get autoremove -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
-
+# Setup zsh for vscode user
 USER $USERNAME
 ENV HOME /home/$USERNAME
 RUN curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh -- \
