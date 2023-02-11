@@ -9,8 +9,6 @@ name: Publish python 3.10 Docker Image
 on:
   push:
     branches: ["python-3.10"]
-    # Publish semver tags as releases.
-    tags: ["v3.10.6"]
   pull_request:
     branches: ["python-3.10"]
   workflow_dispatch:
@@ -88,7 +86,7 @@ jobs:
           cache-to: type=inline
 
       # Sign the package image
-      - name: Sign the images with GitHub OIDC Token **not production ready**
+      - name: Sign the images with GitHub OIDC Token
         if: ${{ github.event_name != 'pull_request' }}
         run: cosign sign -a tag=${TAGS} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
         env:
