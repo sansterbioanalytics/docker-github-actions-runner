@@ -9,7 +9,7 @@ ARG TARGETPLATFORM
 #### BRANCH-SPECIFIC LABELS ####
 # LABEL org.opencontainers.image.description DESCRIPTION
 LABEL org.opencontainers.image.source = "https://github.com/sansterbioanalytics/docker-github-actions-runner/tree/r-4.2.2"
-LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image configured for Github Actions and R 4.2.2"
+LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image configured for Github Actions, R 4.2.2, and a Devcontainer for VSCode (radian, renv, zsh)."
 
 #### ACTIONS-RUNNER ####
 ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
