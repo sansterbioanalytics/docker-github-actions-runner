@@ -8,11 +8,9 @@ name: Publish base Actions Runner Docker Image
 
 on:
   push:
-    branches: ["master"]
-    # Publish semver tags as releases.
-    tags: ["v0.5.0"]
+    branches: ["dev"]
   pull_request:
-    branches: ["master"]
+    branches: ["dev"]
   workflow_dispatch:
 
 env:
@@ -32,7 +30,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: python-3.10
+          ref: master
 
       # Install Cosign https://github.com/sigstore/cosign-installer
       - name: Install Cosign
@@ -88,7 +86,7 @@ jobs:
           cache-to: type=inline
 
       # Sign the package image
-      - name: Sign the images with GitHub OIDC Token **not production ready**
+      - name: Sign the images with GitHub OIDC Token
         if: ${{ github.event_name != 'pull_request' }}
         run: cosign sign -a tag=${TAGS} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
         env:
