@@ -2,18 +2,18 @@
 FROM myoung34/github-runner-base:ubuntu-jammy
 LABEL maintainer="myoung34@my.apsu.edu"
 LABEL forker="austin@sansterbioanalytics.com"
-LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image configured for Github Actions"
-LABEL org.opencontainers.image.source = "https://github.com/sansterbioanalytics/docker-github-actions-runner"
-
-ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
-RUN mkdir -p /opt/hostedtoolcache
-
 ARG GH_RUNNER_VERSION="2.301.1"
 ARG R_VERSION="4.2.2"
 ARG TARGETPLATFORM
 
-#### ACTIONS-RUNNER ####
+#### BRANCH-SPECIFIC LABELS ####
+# LABEL org.opencontainers.image.description DESCRIPTION
+LABEL org.opencontainers.image.source = "https://github.com/sansterbioanalytics/docker-github-actions-runner/tree/r-4.2.2"
+LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image configured for Github Actions and R 4.2.2"
 
+#### ACTIONS-RUNNER ####
+ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
+RUN mkdir -p /opt/hostedtoolcache
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 WORKDIR /actions-runner
@@ -27,6 +27,7 @@ RUN chmod +x /actions-runner/install_actions.sh \
 COPY token.sh entrypoint.sh app_token.sh /
 RUN chmod +x /token.sh /entrypoint.sh /app_token.sh
 
+#### R ####
 # Install R dependencies for related workloads
 RUN apt-get update -y && apt-get install -y \
   build-essential libcurl4-openssl-dev gfortran liblapack-dev \
@@ -40,14 +41,6 @@ RUN apt-get update -y && apt-get install -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
-# Install java? (currently not implemented)
-#15 198.6 make[1]: Entering directory '/actions-runner/R-4.2.2'
-#15 198.6 configuring Java ...
-#15 198.7 
-#15 198.7 *** Cannot find any Java interpreter
-#15 198.7 *** Please make sure 'java' is on your PATH or set JAVA_HOME correspondingly
-#15 198.7 make[1]: [Makefile:87: stamp-java] Error 1 (ignored)
-
 # Install R v4.2.2 from source
 RUN wget https://cran.r-project.org/src/base/R-4/R-${R_VERSION}.tar.gz && tar -xvzf R-${R_VERSION}.tar.gz && cd R-${R_VERSION} && ./configure --with-blas="openblas" --with-lapack --enable-R-shlib && sudo make -j`nproc` && sudo make install
 # Install core R development packages
@@ -56,7 +49,6 @@ RUN Rscript -e 'install.packages(pkgs = c("renv", "xfun","lintr","jsonlite","htt
 RUN pip3 install radian
 
 #### DOCKER ####
-
 # Install Docker CE CLI
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - \
   && sudo add-apt-repository \
@@ -71,7 +63,7 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   && rm -rf /var/lib/apt/lists/*
 
 #### CODESPACES ####
-# Setup the vscode user for codespace
+# Setup the vscode user for codespaces
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -79,7 +71,7 @@ ARG USER_GID=$USER_UID
 RUN groupadd --gid $USER_GID $USERNAME \
   && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
   && apt-get update \
-  && apt-get install -y sudo wget less htop \
+  && apt-get install -y sudo wget less htop git build-essential curl \
   && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
   && chmod 0440 /etc/sudoers.d/$USERNAME \
   #
@@ -87,7 +79,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
   && apt-get autoremove -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
-
+# Setup zsh for vscode user
 USER $USERNAME
 ENV HOME /home/$USERNAME
 RUN curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh -- \
@@ -99,16 +91,6 @@ RUN curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh
   -p https://github.com/zsh-users/zsh-syntax-highlighting
 
 #### ACTIONS-RUNNER ####
-# Setup the actionsrunner user for running
-ARG USERNAME2=actionsrunner
-ARG USER_UID2=1050
-ARG USER_GID2=1050
-
-RUN groupadd --gid $USER_GID2 $USERNAME2 \
-  && useradd -s /bin/bash --uid $USER_UID2 --gid $USER_GID2 -m $USERNAME2 \
-  && echo $USERNAME2 ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME2 \
-  && chmod 0440 /etc/sudoers.d/$USERNAME2
-
-USER actionsrunner
+USER root
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./bin/Runner.Listener", "run", "--startuptype", "service"]
