@@ -2,18 +2,17 @@
 FROM myoung34/github-runner-base:ubuntu-jammy
 LABEL maintainer="myoung34@my.apsu.edu"
 LABEL forker="austin@sansterbioanalytics.com"
-LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image with Python3.10 installed and configured for Github Actions"
-
-ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
-RUN mkdir -p /opt/hostedtoolcache
-
-ARG PYTHON_VERSION="3.10.6"
-ENV POETRY_VERSION="1.3.2"
 ARG GH_RUNNER_VERSION="2.301.1"
 ARG TARGETPLATFORM
 
-#### ACTIONS-RUNNER ####
+#### BRANCH-SPECIFIC LABELS ####
+# LABEL org.opencontainers.image.description DESCRIPTION
+LABEL org.opencontainers.image.source = "https://github.com/sansterbioanalytics/docker-github-actions-runner/tree/python-3.10"
+LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image configured for Github Actions, Python 3.10, and Devcontainers. Includes Docker, Poetry, Pipx, and ZSH."
 
+#### ACTIONS-RUNNER ####
+ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
+RUN mkdir -p /opt/hostedtoolcache
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 WORKDIR /actions-runner
@@ -28,7 +27,6 @@ COPY token.sh entrypoint.sh app_token.sh /
 RUN chmod +x /token.sh /entrypoint.sh /app_token.sh
 
 #### PYTHON ####
-
 # Install Python 3.10 and core dev requirements
 RUN apt-get update && \
   apt-get install -y \
@@ -48,7 +46,6 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN python3 -m pip install pipx
 
 #### DOCKER ####
-
 # Install Docker CE CLI
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - \
   && sudo add-apt-repository \
@@ -63,8 +60,7 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   && rm -rf /var/lib/apt/lists/*
 
 #### CODESPACES ####
-
-# Setup the vscode user for codespace
+# Setup the vscode user for codespaces
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -72,7 +68,7 @@ ARG USER_GID=$USER_UID
 RUN groupadd --gid $USER_GID $USERNAME \
   && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
   && apt-get update \
-  && apt-get install -y sudo wget less htop \
+  && apt-get install -y sudo wget less htop git build-essential curl \
   && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
   && chmod 0440 /etc/sudoers.d/$USERNAME \
   #
@@ -80,7 +76,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
   && apt-get autoremove -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
-
+# Setup zsh for vscode user
 USER $USERNAME
 ENV HOME /home/$USERNAME
 RUN curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh -- \
@@ -92,16 +88,6 @@ RUN curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh
   -p https://github.com/zsh-users/zsh-syntax-highlighting
 
 #### ACTIONS-RUNNER ####
-# Setup the actionsrunner user for running
-ARG USERNAME2=actionsrunner
-ARG USER_UID2=1050
-ARG USER_GID2=1050
-
-RUN groupadd --gid $USER_GID2 $USERNAME2 \
-  && useradd -s /bin/bash --uid $USER_UID2 --gid $USER_GID2 -m $USERNAME2 \
-  && echo $USERNAME2 ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME2 \
-  && chmod 0440 /etc/sudoers.d/$USERNAME2
-
-USER actionsrunner
+USER root
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./bin/Runner.Listener", "run", "--startuptype", "service"]
