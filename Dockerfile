@@ -46,8 +46,9 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN python3 -m pip install pipx
 
 # Install mamba using pip
-RUN conda install mamba -n base -c conda-forge && \
-  pip install mamba -y
+
+RUN curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-pypy3-Linux-x86_64.sh" \
+  && bash Mambaforge-pypy3-Linux-x86_64.sh -b -f 
 
 #### DOCKER ####
 # Install Docker CE CLI
