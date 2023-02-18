@@ -45,6 +45,10 @@ RUN apt-get update && \
 RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN python3 -m pip install pipx
 
+# Install mamba using pip
+RUN conda install mamba -n base -c conda-forge && \
+  pip install mamba -y
+
 #### DOCKER ####
 # Install Docker CE CLI
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - \
