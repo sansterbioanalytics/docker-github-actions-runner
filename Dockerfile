@@ -46,9 +46,13 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN python3 -m pip install pipx
 
 # Install mamba using pip
+RUN wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" \
+  && bash Miniforge3-$(uname)-$(uname -m).sh -b -f -p /usr/bin/conda \
+  && source "/usr/bin/conda/etc/profile.d/conda.sh" \
+  && conda activate
 
-RUN curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-pypy3-Linux-x86_64.sh" \
-  && bash Mambaforge-pypy3-Linux-x86_64.sh -b -f 
+# RUN curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-pypy3-Linux-x86_64.sh" \
+#  && bash Mambaforge-pypy3-Linux-x86_64.sh -b -f 
 
 #### DOCKER ####
 # Install Docker CE CLI
