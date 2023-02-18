@@ -47,7 +47,7 @@ RUN python3 -m pip install pipx
 
 # Install mamba using pip
 RUN wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" \
-  && bash Miniforge3-$(uname)-$(uname -m).sh -b -f -p /usr/bin/conda \
+  && bash Miniforge3.sh -b -f -p /usr/bin/conda \
   && source "/usr/bin/conda/etc/profile.d/conda.sh" \
   && conda activate
 
