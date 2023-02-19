@@ -1,14 +1,26 @@
 Docker Github Actions Runner
 ============================
+[![Publish master Docker Image](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-master.yml/badge.svg?branch=master)](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-master.yml)
+[![Publish dev Docker Image](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-dev.yml/badge.svg?branch=dev)](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-dev.yml)
+[![Publish python 3.10 Docker Image](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-python-3.10.yml/badge.svg?branch=python-3.10)](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-python-3.10.yml)
+[![Publish r-4.2.2 Docker Image](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-r-4.2.2.yml/badge.svg?branch=r-4.2.2)](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-r-4.2.2.yml)
 
 ![Runner Versions](https://ghcr-badge.deta.dev/sansterbioanalytics/unified-actions-runner/tags?trim=major&ignore=sha256*)
 
+## Introduction and Overview
+
+Hello and welcome to my first real open-source project! 
+
+
+## Introduction and Overview
+
+Hello and welcome to my first real open-source project! 
+
+
 ## Quick-Start (Examples and Usage) ##
 
-To configure and launch a self-hosted runner for the intended purpose, use the SBA_run.sh script with the desired runner version
-
+This script assumes that you have Docker installed and available on your PATH.
 ```bash
-./SBA_run.sh r-4.2.2
 ```
 
 This will run the [new self-hosted github actions runners](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/hosting-your-own-runners).
