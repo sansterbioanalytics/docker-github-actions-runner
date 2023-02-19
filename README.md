@@ -1,7 +1,7 @@
 Docker Github Actions Runner
 ============================
 
-![Runner Versions](https://ghcr-badge.deta.dev/sansterbioanalytics/docker-github-actions-runner/tags?trim=major&ignore=sha256*)
+![Runner Versions](https://ghcr-badge.deta.dev/sansterbioanalytics/unified-actions-runner/tags?trim=major&ignore=sha256*)
 
 ## Quick-Start (Examples and Usage) ##
 
@@ -12,7 +12,7 @@ To configure and launch a self-hosted runner for the intended purpose, use the S
 ```
 
 This will run the [new self-hosted github actions runners](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/hosting-your-own-runners).
-Please see [the wiki](https://github.com/myoung34/docker-github-actions-runner/wiki/Usage)
+Please see [the wiki](https://github.com/sansterbioanalytics/unified-actions-runner/wiki/Home) for details on how to deploy unified action runners and more.
 
 
 ## Notes ##

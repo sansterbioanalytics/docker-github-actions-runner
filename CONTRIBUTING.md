@@ -1,12 +1,10 @@
-# Welcome to docker-github-actions-runner contributing guide <!-- omit in toc -->
+# Welcome to unified-actions-runner contributing guide <!-- omit in toc -->
 
 Welcome!
 
 ## Code of conduct
 
-Be kind, research before asking/contributing.
 
-Please remember that my time is limited and my resources are as well. Solving "nuances" will likely require external contributions but I'm happy to help and guide.
 
 ### Issues
 
