@@ -9,7 +9,7 @@ name: Publish master Docker Image
 on:
   push:
     branches: ["master"]
-    # Publish semver tags as releases.
+    paths: ["Dockerfile"]
     tags: ["v*.*.0"]
   pull_request:
     branches: ["master"]
