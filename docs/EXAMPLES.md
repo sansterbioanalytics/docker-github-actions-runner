@@ -68,7 +68,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-	# Must match all LABELS in runner, excellent to provision runners with different envs
+    # Must match all LABELS in runner, excellent to provision runners with different envs
     runs-on: [self-hosted, Linux, r-4.2.2]
     env: 
       RENV_PATHS_ROOT: ~/.renv
