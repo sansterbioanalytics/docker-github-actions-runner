@@ -1,4 +1,4 @@
-name: Publish base Actions Runner Docker Image
+name: Publish master Docker Image
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
