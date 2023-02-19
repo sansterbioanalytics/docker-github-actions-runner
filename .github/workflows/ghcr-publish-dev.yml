@@ -8,7 +8,7 @@ name: Publish dev Docker Image
 
 on:
   push:
-    branches: ["dev"]
+    paths: ["Dockerfile"]
   pull_request:
     branches: ["dev"]
   workflow_dispatch:
