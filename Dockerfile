@@ -1,14 +1,12 @@
 # hadolint ignore=DL3007
 FROM myoung34/github-runner-base:ubuntu-jammy
-LABEL maintainer="myoung34@my.apsu.edu"
-LABEL forker="austin@sansterbioanalytics.com"
+LABEL maintainer="austin@sansterbioanalytics.com"
 ARG GH_RUNNER_VERSION="2.302.1"
 ARG TARGETPLATFORM
 
 #### BRANCH-SPECIFIC LABELS ####
-# LABEL org.opencontainers.image.description DESCRIPTION
-LABEL org.opencontainers.image.source = "https://github.com/sansterbioanalytics/docker-github-actions-runner/tree/dev"
-LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image configured for Github Actions. UNSTABLE DEVELOPMENT BRANCH"
+LABEL org.opencontainers.image.source = "https://github.com/sansterbioanalytics/unified-actions-runner/tree/master"
+LABEL org.opencontainers.image.description="UNSTABLE, Ubuntu 22, Self-Hosted GitHub Actions Runner, Docker CE CLI, VS Codespaces, build-essential, zsh, git"
 
 #### ACTIONS-RUNNER ####
 ENV AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
