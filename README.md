@@ -1,21 +1,26 @@
-Docker Github Actions Runner
+Unified Actions Runner
 ============================
+[![Publish master Docker Image](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-master.yml/badge.svg?branch=master)](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-master.yml)
+[![Publish dev Docker Image](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-dev.yml/badge.svg?branch=dev)](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-dev.yml)
+[![Publish python 3.10 Docker Image](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-python-3.10.yml/badge.svg?branch=python-3.10)](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-python-3.10.yml)
+[![Publish r-4.2.2 Docker Image](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-r-4.2.2.yml/badge.svg?branch=r-4.2.2)](https://github.com/sansterbioanalytics/unified-actions-runner/actions/workflows/ghcr-publish-r-4.2.2.yml)
+
 
 ![Runner Versions](https://ghcr-badge.deta.dev/sansterbioanalytics/unified-actions-runner/tags?trim=major&ignore=sha256*)
 
-## Quick-Start (Examples and Usage) ##
+## Deploy a local Organization-level Runner ##
 
-To configure and launch a self-hosted runner for the intended purpose, use the SBA_run.sh script with the desired runner version
+This script assumes that you have the Docker CLI installed 
 
 ```bash
-./SBA_run.sh r-4.2.2
+git clone https://github.com/sansterbioanalytics/unified-actions-runner
+cd unified-actions-runner
+nano .env # Fill out required env variables
+./deploy_local_org_runner.sh `master` | `dev` | `r-4.2.2` | `python-3.10`
 ```
 
-This will run the [new self-hosted github actions runners](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/hosting-your-own-runners).
 Please see [the wiki](https://github.com/sansterbioanalytics/unified-actions-runner/wiki/Home) for details on how to deploy unified action runners and more.
 
-
-## Notes ##
 
 ### Security ###
 
@@ -40,19 +45,6 @@ Currently runners [do not support containerd](https://github.com/actions/runner/
 
 Please note `docker-compose` does not currently work on ARM ([see issue](https://github.com/docker/compose/issues/6831)) so it is not installed on ARM based builds here.
 A workaround exists, please see [here](https://github.com/myoung34/docker-github-actions-runner/issues/72#issuecomment-804723656)
-
-## Docker Artifacts ##
-
-| Container Base | Supported Architectures | Tag Regex | Docker Tags | Description | Notes |
-| --- | --- | --- | --- | --- | --- |
-| ubuntu focal | `x86_64`,`arm64` | `/\d\.\d{3}\.\d+/` `/\d\.\d{3}\.\d+-ubuntu-focal/`| [latest](https://hub.docker.com/r/myoung34/github-runner/tags?page=1&name=latest) [ubuntu-focal](https://hub.docker.com/r/myoung34/github-runner/tags?page=1&name=ubuntu-focal) | This is the latest build (Rebuilt nightly and on master merges). Tags without an OS name are included. Tags with `-ubuntu-focal` are included and created on [upstream tags](https://github.com/actions/runner/tags).|
-| ubuntu jammy | `x86_64`,`arm64` | `/\d\.\d{3}\.\d+-ubuntu-jammy/` | [ubuntu-jammy](https://hub.docker.com/r/myoung34/github-runner/tags?page=1&name=ubuntu-jammy) | This is the latest build from jammy (Rebuilt nightly and on master merges). Tags with `-ubuntu-jammy` are included and created on [upstream tags](https://github.com/actions/runner/tags). | There is [currently an issue with jammy from inside a 20.04LTS host](https://github.com/myoung34/docker-github-actions-runner/issues/219) which is why this is not `latest` |
-| ubuntu bionic | `x86_64`,`arm64` | `/\d\.\d{3}\.\d+-ubuntu-bionic/` | [ubuntu-bionic](https://hub.docker.com/r/myoung34/github-runner/tags?page=1&name=ubuntu-bionic) | This is the latest build from bionic (Rebuilt nightly and on master merges). Tags with `-ubuntu-bionic` are included and created on [upstream tags](https://github.com/actions/runner/tags). | |
-| debian buster (now deprecated) | `x86_64`,`arm64` |  `/\d\.\d{3}\.\d+-debian-buster/` | [debian-buster](https://hub.docker.com/r/myoung34/github-runner/tags?page=1&name=debian-buster) | Debian buster is now deprecated. The packages for arm v7 are in flux and are wildly causing build failures (git as well as apt-key and liblttng-ust#. Tags with `-debian-buster` are included and created on [upstream tags](https://github.com/actions/runner/tags). | |
-| debian bullseye | `x86_64`,`arm64` |  `/\d\.\d{3}\.\d+-debian-bullseye/` | [debian-bullseye](https://hub.docker.com/r/myoung34/github-runner/tags?page=1&name=debian-bullseye) | This is the latest build from bullseye (Rebuilt nightly and on master merges). Tags with `-debian-bullseye` are included and created on [upstream tags](https://github.com/actions/runner/tags). | |
-| debian sid | `x86_64`,`arm64` |  `/\d\.\d{3}\.\d+-debian-sid/` | [debian-sid](https://hub.docker.com/r/myoung34/github-runner/tags?page=1&name=debian-sid) | This is the latest build from sid (Rebuilt nightly and on master merges). Tags with `-debian-sid` are included and created on [upstream tags](https://github.com/actions/runner/tags). | |
-
-These containers are built via Github actions that [copy the dockerfile](https://github.com/myoung34/docker-github-actions-runner/blob/master/.github/workflows/deploy.yml#L47), changing the `FROM` and building to provide simplicity.
 
 ## Environment Variables ##
 
