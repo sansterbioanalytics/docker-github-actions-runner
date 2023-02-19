@@ -42,7 +42,7 @@ RUN apt-get update && \
   libcairo2-dev libjpeg-dev libgif-dev pkg-config  libgirepository1.0-dev libdbus-1-dev
 
 # Install Poetry and Pipx
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/usr/bin/poetry/ python3 -
 RUN python3 -m pip install pipx
 
 # Install mamba using pip
