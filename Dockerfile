@@ -51,9 +51,6 @@ RUN wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/lat
   && source "/usr/bin/conda/etc/profile.d/conda.sh" \
   && conda activate
 
-# RUN curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-pypy3-Linux-x86_64.sh" \
-#  && bash Mambaforge-pypy3-Linux-x86_64.sh -b -f 
-
 #### DOCKER ####
 # Install Docker CE CLI
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - \
