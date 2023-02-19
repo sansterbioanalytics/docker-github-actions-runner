@@ -2,7 +2,7 @@
 FROM myoung34/github-runner-base:ubuntu-jammy
 LABEL maintainer="myoung34@my.apsu.edu"
 LABEL forker="austin@sansterbioanalytics.com"
-ARG GH_RUNNER_VERSION="2.301.1"
+ARG GH_RUNNER_VERSION="2.302.1"
 ARG TARGETPLATFORM
 
 #### BRANCH-SPECIFIC LABELS ####
