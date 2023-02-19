@@ -1,7 +1,6 @@
 # hadolint ignore=DL3007
 FROM myoung34/github-runner-base:ubuntu-jammy
-LABEL maintainer="myoung34@my.apsu.edu"
-LABEL forker="austin@sansterbioanalytics.com"
+LABEL maintainer="austin@sansterbioanalytics.com"
 ARG GH_RUNNER_VERSION="2.302.1"
 ARG R_VERSION="4.2.2"
 ARG TARGETPLATFORM

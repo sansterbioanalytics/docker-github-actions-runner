@@ -26,8 +26,8 @@ validate_input() {
         exit 1
     fi
 
-    if [[ $1 != "r-4.2.2" && $1 != "python3.10" && $1 != "master" ]]; then
-        echo "Error: Invalid value for RUNNER_GROUP. Must be one of R-4.2.2, Python3.10, or master."
+    if [[ $1 != "master" && $1 != "dev" && != "r-4.2.2" && $1 != "python-3.10" ]]; then
+        echo "Error: Invalid value for RUNNER_GROUP. Must be one of master, dev, r-4.2.2, or python-3.10"
         exit 1
     fi
 }
@@ -58,20 +58,21 @@ done
 start_runner(){
     case "$1" in
         r-4.2.2)
-            image_name="ghcr.io/sansterbioanalytics/docker-github-actions-runner:r-4.2.2"
+            image_name="ghcr.io/sansterbioanalytics/unified-actions-runner:r-4.2.2"
             ;;
         python3.10)
-            image_name="ghcr.io/sansterbioanalytics/docker-github-actions-runner:python-3.10"
+            image_name="ghcr.io/sansterbioanalytics/unified-actions-runner:python-3.10"
             ;;
         master)
-            image_name="ghcr.io/sansterbioanalytics/docker-github-actions-runner:master"
+            image_name="ghcr.io/sansterbioanalytics/unified-actions-runner:master"
+            ;;
+        dev)
+            image_name="ghcr.io/sansterbioanalytics/unified-actions-runner:dev"
             ;;
         *)
-            echo "Error: Invalid value for RUNNER_GROUP. Must be one of r-4.2.2, python3.10, or master."
+            echo "Error: Invalid value for RUNNER_GROUP. Must be one of master, dev, r-4.2.2, or python-3.10."
             exit 1
     esac
-    # Login to ghrc
-    echo $CLASSIC_ACCESS_TOKEN | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
     # Remove local runner if it already exists
     docker rm "github-runner-${runner_group,,}"
     # Start the runner
@@ -85,7 +86,7 @@ start_runner(){
       -e ORG_NAME=$ORG_NAME \
       -e LABELS="$LABELS,${runner_group,,}" \
       -v /var/run/docker.sock:/var/run/docker.sock \
-      -v /tmp/sansterbioanalytics/docker-github-actions-runner:/tmp/sansterbioanalytics/docker-github-actions-runner \
+      -v /tmp/unified-actions-runner:/tmp/unified-actions-runner \
       $image_name
 }
 
