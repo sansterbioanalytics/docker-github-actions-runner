@@ -76,7 +76,7 @@ start_runner(){
     # Remove local runner if it already exists
     docker rm "github-runner-${runner_group,,}"
     # Start the runner
-    docker run -d --restart always --name "github-runner-${runner_group,,}" \
+    docker run -d --restart always --name "unified-actions-runner-${runner_group,,}" \
       -e RUNNER_NAME_PREFIX="$RUNNER_NAME_PREFIX,${runner_group,,}"\
       -e ACCESS_TOKEN=$ACCESS_TOKEN \
       -e RUNNER_WORKDIR=$RUNNER_WORKDIR \
