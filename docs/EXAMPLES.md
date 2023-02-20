@@ -12,9 +12,7 @@
 	"remoteUser": "vscode",
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
-		"ghcr.io/stuartleeks/dev-container-features/shell-history:0": {},
-		// A feature that allows for renv cache to be used by all containers
-		"ghcr.io/rocker-org/devcontainer-features/renv-cache:0": {}
+		// example "ghcr.io/rocker-org/devcontainer-features/your-desired-feature:0" : {},
 	},
 	"customizations": {
 		"vscode": {
