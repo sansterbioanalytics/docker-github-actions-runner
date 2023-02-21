@@ -50,6 +50,7 @@ RUN wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/lat
   && conda activate
 
 ENV PATH="/usr/bin/poetry/bin:$PATH"
+ENV PATH="/usr/bin/conda/bin:$PATH"
 
 #### DOCKER ####
 # Install Docker CE CLI
