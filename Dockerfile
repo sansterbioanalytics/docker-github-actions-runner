@@ -49,7 +49,7 @@ RUN wget https://cran.r-project.org/src/base/R-4/R-${R_VERSION}.tar.gz && \
   sudo make -j `nproc` && \
   sudo make install && \
   cp ./bin/ /usr/local/bin/ && \
-  rm R-${R_VERSION}.tar.gz
+  rm ../R-${R_VERSION}.tar.gz
 
 # Install core R development packages
 RUN Rscript -e 'install.packages(pkgs = c("renv", "xfun","lintr","jsonlite","httpgd","devtools","R6"), repos = "https://cloud.r-project.org")'
