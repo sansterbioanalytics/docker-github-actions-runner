@@ -45,7 +45,7 @@ RUN apt-get update -y && apt-get install -y \
 RUN wget https://cran.r-project.org/src/base/R-4/R-${R_VERSION}.tar.gz && \
   tar -xvzf R-${R_VERSION}.tar.gz && \
   cd R-${R_VERSION} && \
-  ./configure --with-blas="openblas" --with-lapack --enable-R-shlib && \
+  ./configure --with-blas="openblas" --with-lapack --enable-R-shlib  --prefix=/usr/bin/R-${R_VERSION} && \
   sudo make -j `nproc` && \
   sudo make install && \
   cp ./bin/ /usr/local/bin/ && \
