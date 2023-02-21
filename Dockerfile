@@ -35,7 +35,7 @@ RUN apt-get update -y && apt-get install -y \
   libgdal-dev libproj-dev libgeos-dev libudunits2-dev libnode-dev libcairo2-dev libnetcdf-dev \
   libmagick++-dev libjq-dev libv8-dev libprotobuf-dev protobuf-compiler libsodium-dev imagemagick libgit2-dev \
   gobjc++ texinfo texlive-latex-base latex2html texlive-fonts-extra pandoc libharfbuzz-dev libfribidi-dev \
-  urw-fonts libsdl-pango-dev xz-utils zsh zsh-common zsh-doc \
+  fonts-urw-base35 libsdl-pango-dev xz-utils zsh zsh-common zsh-doc \
   # Clean up
   && apt-get autoremove -y \
   && apt-get clean -y \
