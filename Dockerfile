@@ -57,7 +57,10 @@ RUN /usr/bin/R-${R_VERSION}/bin/Rscript -e 'install.packages(pkgs = c("renv", "x
 RUN pip3 install radian
 
 # Make sure R is in the path
+RUN echo $PATH
 ENV PATH="/usr/bin/R-${R_VERSION}/bin:${PATH}"
+RUN echo $PATH
+RUN echo $(R --version) && echo $(Rscript --version)
 
 #### DOCKER ####
 # Install Docker CE CLI
