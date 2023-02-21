@@ -56,6 +56,9 @@ RUN /usr/bin/R-${R_VERSION}/bin/Rscript -e 'install.packages(pkgs = c("renv", "x
 # Add related R development tools
 RUN pip3 install radian
 
+# Make sure R is in the path
+ENV PATH="/usr/bin/R-${R_VERSION}/bin:${PATH}"
+
 #### DOCKER ####
 # Install Docker CE CLI
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - \
