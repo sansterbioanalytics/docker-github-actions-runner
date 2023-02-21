@@ -49,8 +49,14 @@ RUN wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/lat
   && source "/usr/bin/conda/etc/profile.d/conda.sh" \
   && conda activate
 
-RUN export PATH="/usr/bin/poetry/bin:$PATH" && \
-  export PATH="/usr/bin/conda/bin:$PATH"
+# Add tools to path
+RUN echo $PATH
+ENV PATH="/usr/bin/poetry/bin:$PATH"
+ENV PATH="/usr/bin/conda/bin:$PATH"
+RUN echo $PATH
+
+# Ensure tools are installed
+RUN poetry --version && pipx --version && conda --version
 
 #### DOCKER ####
 # Install Docker CE CLI
