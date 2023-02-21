@@ -52,7 +52,7 @@ RUN wget https://cran.r-project.org/src/base/R-4/R-${R_VERSION}.tar.gz && \
   rm -rf R-${R_VERSION}.tar.gz ./R-${R_VERSION}
 
 # Install core R development packages
-RUN Rscript -e 'install.packages(pkgs = c("renv", "xfun","lintr","jsonlite","httpgd","devtools","R6"), repos = "https://cloud.r-project.org")'
+RUN /usr/bin/R-${R_VERSION}/bin/Rscript -e 'install.packages(pkgs = c("renv", "xfun","lintr","jsonlite","httpgd","devtools","R6"), repos = "https://cloud.r-project.org")'
 # Add related R development tools
 RUN pip3 install radian
 
