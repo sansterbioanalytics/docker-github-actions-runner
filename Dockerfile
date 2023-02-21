@@ -48,8 +48,8 @@ RUN wget https://cran.r-project.org/src/base/R-4/R-${R_VERSION}.tar.gz && \
   ./configure --with-blas="openblas" --with-lapack --enable-R-shlib  --prefix=/usr/bin/R-${R_VERSION} && \
   sudo make -j `nproc` && \
   sudo make install && \
-  cp ./bin/ /usr/local/bin/ && \
-  rm ../R-${R_VERSION}.tar.gz
+  cd .. && \
+  rm -rf R-${R_VERSION}.tar.gz ./R-${R_VERSION}
 
 # Install core R development packages
 RUN Rscript -e 'install.packages(pkgs = c("renv", "xfun","lintr","jsonlite","httpgd","devtools","R6"), repos = "https://cloud.r-project.org")'
