@@ -35,13 +35,22 @@ RUN apt-get update -y && apt-get install -y \
   libgdal-dev libproj-dev libgeos-dev libudunits2-dev libnode-dev libcairo2-dev libnetcdf-dev \
   libmagick++-dev libjq-dev libv8-dev libprotobuf-dev protobuf-compiler libsodium-dev imagemagick libgit2-dev \
   gobjc++ texinfo texlive-latex-base latex2html texlive-fonts-extra pandoc libharfbuzz-dev libfribidi-dev \
+  urw-fonts libsdl-pango-dev xz-utils zsh zsh-common zsh-doc \
   # Clean up
   && apt-get autoremove -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
-# Install R v4.2.2 from source
-RUN wget https://cran.r-project.org/src/base/R-4/R-${R_VERSION}.tar.gz && tar -xvzf R-${R_VERSION}.tar.gz && cd R-${R_VERSION} && ./configure --with-blas="openblas" --with-lapack --enable-R-shlib && sudo make -j`nproc` && sudo make install
+# Install R v4.2.2 from source with optimizations
+RUN wget https://cran.r-project.org/src/base/R-4/R-${R_VERSION}.tar.gz && \
+  tar -xvzf R-${R_VERSION}.tar.gz && \
+  cd R-${R_VERSION} && \
+  ./configure --with-blas="openblas" --with-lapack --enable-R-shlib && \
+  sudo make -j `nproc` && \
+  sudo make install && \
+  cp ./bin/ /usr/local/bin/ && \
+  rm ../R-${R_VERSION}.tar.gz
+
 # Install core R development packages
 RUN Rscript -e 'install.packages(pkgs = c("renv", "xfun","lintr","jsonlite","httpgd","devtools","R6"), repos = "https://cloud.r-project.org")'
 # Add related R development tools
