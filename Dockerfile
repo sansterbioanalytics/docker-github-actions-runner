@@ -1,7 +1,7 @@
 # hadolint ignore=DL3007
 FROM myoung34/github-runner-base:ubuntu-jammy
 LABEL maintainer="austin@sansterbioanalytics.com"
-ARG GH_RUNNER_VERSION="2.302.1"
+ARG GH_RUNNER_VERSION="2.303.0"
 ARG R_VERSION="4.2.2"
 ARG TARGETPLATFORM
 
