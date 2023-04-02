@@ -6,7 +6,6 @@ ARG R_VERSION="4.2.2"
 ARG TARGETPLATFORM
 
 #### BRANCH-SPECIFIC LABELS ####
-# LABEL org.opencontainers.image.description DESCRIPTION
 LABEL org.opencontainers.image.source = "https://github.com/sansterbioanalytics/docker-github-actions-runner/tree/r-4.2.2"
 LABEL org.opencontainers.image.description="A CI/CD Ubuntu 22 based image configured for Github Actions, R 4.2.2, and a Devcontainer for VSCode (radian, renv, zsh)."
 
@@ -36,6 +35,7 @@ RUN apt-get update -y && apt-get install -y \
   libmagick++-dev libjq-dev libv8-dev libprotobuf-dev protobuf-compiler libsodium-dev imagemagick libgit2-dev \
   gobjc++ texinfo texlive-latex-base latex2html texlive-fonts-extra pandoc libharfbuzz-dev libfribidi-dev \
   fonts-urw-base35 libsdl-pango-dev xz-utils zsh zsh-common zsh-doc \
+  libgsl-dev libhdf5-serial-dev \
   # Clean up
   && apt-get autoremove -y \
   && apt-get clean -y \
@@ -88,7 +88,6 @@ RUN groupadd --gid $USER_GID $USERNAME \
   && apt-get install -y sudo wget less htop git build-essential curl \
   && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
   && chmod 0440 /etc/sudoers.d/$USERNAME \
-  #
   # Clean up
   && apt-get autoremove -y \
   && apt-get clean -y \
