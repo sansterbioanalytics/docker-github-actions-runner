@@ -51,8 +51,8 @@ RUN wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/lat
 
 # Add tools to path
 RUN echo $PATH
-ENV PATH="/usr/bin/poetry/bin:$PATH"
-ENV PATH="/usr/bin/conda/bin:$PATH"
+ENV PATH="/usr/bin/poetry/bin:${PATH}"
+ENV PATH="/usr/bin/conda/bin:${PATH}"
 RUN echo $PATH
 
 # Ensure tools are installed
