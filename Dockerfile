@@ -44,21 +44,26 @@ RUN apt-get update && \
 RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/usr/bin/poetry/ python3 -
 RUN python3 -m pip install pipx
 
-# Install mamba using pip
-RUN wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" \
-  && bash Miniforge3.sh -b -f -p /usr/bin/conda \
-  && source "/usr/bin/conda/etc/profile.d/conda.sh" \
-  && conda activate \
-  && conda install mamba -n base -c conda-forge
+# Install micromamba using recommended method (https://mamba.readthedocs.io/en/latest/installation.html)
+RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba \
+  && eval "$(./bin/micromamba shell hook -s posix bash zsh -p /home/vscode/micromamba)" \
+  && micromamba activate
+
+ENV MAMBA_ROOT_PREFIX="/home/vscode/micromamba"
+
+# RUN wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" \
+#   && bash Miniforge3.sh -b -f -p /usr/bin/conda \
+#   && source "/usr/bin/conda/etc/profile.d/conda.sh" \
+#   && conda activate
 
 # Add tools to path
 RUN echo $PATH
 ENV PATH="/usr/bin/poetry/bin:${PATH}"
-ENV PATH="/usr/bin/conda/bin:${PATH}"
+ENV PATH="/usr/bin/micromamba/bin:${PATH}"
 RUN echo $PATH
 
 # Ensure tools are installed
-RUN poetry --version && pipx --version && conda --version
+RUN poetry --version && pipx --version && mamba --version
 
 #### DOCKER ####
 # Install Docker CE CLI
