@@ -49,6 +49,7 @@ RUN wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/lat
   && bash Miniforge3.sh -b -f -p /usr/bin/conda \
   && source "/usr/bin/conda/etc/profile.d/conda.sh" \
   && conda activate
+  && conda install -y mamba
 
 # Add tools to path
 RUN echo $PATH
