@@ -44,22 +44,23 @@ RUN apt-get update && \
 RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/usr/bin/poetry/ python3 -
 RUN python3 -m pip install pipx
 
-# Install micromamba using recommended method (https://mamba.readthedocs.io/en/latest/installation.html)
-RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba 
+# Install mamba using pip
+RUN wget -O Mambaforge.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh" \
+  && bash Mambaforge.sh -b -f -p /usr/bin/conda \
+  && source "/usr/bin/conda/etc/profile.d/conda.sh" \
+  && conda activate \
+  && source "/usr/bin/conda/etc/profile.d/mamba.sh"
+
 
 # Add tools to path
 RUN echo $PATH
-ENV MAMBA_ROOT_PREFIX="/home/vscode/micromamba"
+ENV MAMBA_ROOT_PREFIX="/home/vscode/mamba"
 ENV PATH="/usr/bin/poetry/bin:${PATH}"
-ENV PATH="bin/micromamba/bin:${PATH}"
+ENV PATH="/usr/bin/conda/bin:${PATH}"
 RUN echo $PATH
 
 # Ensure tools are installed
-RUN poetry --version && pipx --version
-
-# Activate base mamba environment
-RUN eval "$(./bin/micromamba shell hook -s posix)" \
-  && micromamba activate
+RUN poetry --version && pipx --version && conda --version && mamba --version
 
 #### DOCKER ####
 # Install Docker CE CLI
@@ -106,10 +107,10 @@ RUN curl -L https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh
   -p https://github.com/zsh-users/zsh-completions \
   -p https://github.com/zsh-users/zsh-syntax-highlighting
 
-# Resolve missing .oh-my.zsh
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 #### ACTIONS-RUNNER ####
 USER root
+# Resolve missing .oh-my.zsh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./bin/Runner.Listener", "run", "--startuptype", "service"]
