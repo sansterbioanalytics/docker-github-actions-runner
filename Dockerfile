@@ -46,7 +46,7 @@ RUN python3 -m pip install pipx
 
 # Install micromamba using recommended method (https://mamba.readthedocs.io/en/latest/installation.html)
 RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba \
-  && eval "$(./bin/micromamba shell hook -s posix bash zsh -p /home/vscode/micromamba)" \
+  && ./bin/micromamba shell hook -s zsh -p /home/vscode/micromamba \
   && micromamba activate
 
 ENV MAMBA_ROOT_PREFIX="/home/vscode/micromamba"
