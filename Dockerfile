@@ -55,6 +55,7 @@ RUN wget -O Mambaforge.sh "https://github.com/conda-forge/miniforge/releases/lat
 # Add tools to path
 RUN echo $PATH
 ENV MAMBA_ROOT_PREFIX="/home/vscode/mamba"
+ENV CONDA="/usr/bin/conda/bin/conda"
 ENV PATH="/usr/bin/poetry/bin:${PATH}"
 ENV PATH="/usr/bin/conda/bin:${PATH}"
 RUN echo $PATH
