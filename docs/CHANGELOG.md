@@ -1,3 +1,9 @@
+# v1.0.1 Patch
+
+## Bug Fixes
+
+- Updated GH runner version to resolve an issue with release-please workflows on self-hosted runners.
+
 # v1.0.0 Initial Release
 
 Initial Release of Unified Action Runners with stable docker images for `r-4.2.2` and `python-3.10`
