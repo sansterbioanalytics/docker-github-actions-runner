@@ -38,7 +38,7 @@ RUN python3 --version
 RUN apt-get update && \
   apt-get install -y \
   libcairo2-dev libjpeg-dev libgif-dev pkg-config libgirepository1.0-dev \
-  libdbus-1-dev
+  libdbus-1-dev libjemalloc-dev
 
 # Install Poetry and Pipx
 RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/usr/bin/poetry/ python3 -
