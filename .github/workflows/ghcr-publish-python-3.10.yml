@@ -41,7 +41,7 @@ jobs:
       # Check Cosign 
       - name: Check install!
         run: cosign version
-
+        
       # Setup QEMU binaries https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -54,6 +54,7 @@ jobs:
           driver-opts: |
             image=moby/buildkit:master
             network=host
+            
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
       - name: Extract Docker metadata
